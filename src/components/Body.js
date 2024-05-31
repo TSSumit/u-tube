@@ -8,7 +8,7 @@ import MainContainer from './MainContainer';
 function Body() {;
   return (
     <Provider store={store}>
-      <div className='flex overflow-hidden max-h-screen max-w-screen'>
+      <div className='flex overflow-x-hidden max-h-100vh max-w-100vw'>
           <Slidebar/>
           <section>
               <Head/>

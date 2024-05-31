@@ -13,18 +13,18 @@ import { MdArrowForwardIos, MdFeedback, MdHomeFilled, MdOutlineFlag, MdOutlinePo
 import { RiMusicFill, RiVideoFill } from 'react-icons/ri';
 import {  SiYoutubegaming, SiYoutubeshorts, SiYoutubestudio } from 'react-icons/si';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleMenue } from '../utils/appSlice';
+import { toggleMenu } from '../utils/appSlice';
 
 const Slidebar=()=> {
-    const isOpen=useSelector(store=>store.app.isMenueOpen);
+    const isOpen=useSelector(store=>store.app.isMenuOpen);
     const dispatch=useDispatch()
     const handleHideList=()=>{
-        dispatch(toggleMenue());
+        dispatch(toggleMenu());
     }
     if(!isOpen)return null;
   return (
-    <div className={`absolute left-0 transition-transform duration-300 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} pl-7 pr-2 pt-2 h-screen w-60 border-r-[1px] border-black flex align-center flex-col bg-white overflow-scroll overflow-x-hidden `}>
-        <div className="w-[15vw] min-w-40 pr-5  h-16 flex justify-between items-center my-2  ">
+    <div className={` left-0 transition-transform duration-300 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} pl-7 pr-2 pt-2 h-screen w-60 border-r-[1px] border-black flex align-center flex-col bg-white overflow-scroll overflow-x-hidden `}>
+        <div className="w-[12vw] min-w-40 pr-5  h-16 flex justify-between items-center my-2  ">
             <span className='p-1 hover:bg-gray-300 hover:border-0 hover:rounded-full active:bg-gray-500'>
                 <BsList onClick={handleHideList} className="w-7 h-7 min-w-6 min-h-6"/>
             </span>

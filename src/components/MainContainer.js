@@ -7,7 +7,7 @@ import { BiSolidVideos } from 'react-icons/bi'
 
 const MainContainer=()=> {
   return (
-    <div className="flex w-[99vw] max-w-[100vw] h-[88vh] border-black">
+    <div className="flex w-[100vw] h-[88vh] border-black border-[2px] px-2">
         <div className=' h-[100%] w-[80px]  flex-row items-center text-xs '>
           <span className='flex flex-col justify-center items-center h-15 w-full my-7 ' >
             <MdHomeFilled className='h-7 w-7'/>
