@@ -30,7 +30,7 @@ const Head = () => {
     <header className='px-4 py-1  w-full flex justify-between items-center h-15'>
       <div className="flex items-center w-auto md:w-[12vw] min-w-[150px] md:min-w-[190px] pr-2 md:pr-5 h-full">
         <button 
-          className='p-1 hover:bg-gray-300 rounded-full active:bg-gray-500' 
+          className=' hidden sm:block p-1 hover:bg-gray-300 rounded-full active:bg-gray-500' 
           onClick={handleShowList}
         >
           <BsList className="w-6 h-6 md:w-7 md:h-7" />
@@ -54,12 +54,14 @@ const Head = () => {
         >
           <BsSearch className="h-full w-5" />
         </button>
-        <TiMicrophone className="h-9 md:h-10 w-10 md:w-12 m-1 md:m-2 bg-gray-300 p-2 rounded-full" />
+        <TiMicrophone className="hidden sm:block h-9 md:h-10 w-10 md:w-12 m-1 md:m-2 bg-gray-300 p-2 rounded-full" />
       </div>
-      <div className="flex items-center max-w-[150px] md:w-[10vw] min-w-[80px] h-full space-x-3 md:space-x-4 ">
-        <RiVideoAddLine className="h-6 md:h-8 w-6 md:w-8" />
-        <FaBell className="h-6 md:h-8 w-6 md:w-8" />
-        <CgProfile className="h-6 md:h-8 w-6 md:w-8" />
+      <div className='hidden sm:block'>
+        <div className="flex items-center  max-w-[150px] md:w-[10vw] min-w-[80px] h-full space-x-3 md:space-x-4 ">
+          <RiVideoAddLine className="h-6 md:h-8 w-6 md:w-8" />
+          <FaBell className="h-6 md:h-8 w-6 md:w-8" />
+          <CgProfile className="h-6 md:h-8 w-6 md:w-8" />
+        </div>
       </div>
     </header>
   );

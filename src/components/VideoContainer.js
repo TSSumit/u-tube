@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import VideoCard from './VideoCard';
 import { YOUTUBE_VIDEOS_API } from '../utils/constants';
+import { Link } from 'react-router-dom';
 
 function VideoContainer() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     getVideos();
+    console.log("data fetched sucessfully");
   }, []);
 
   const getVideos = async () => {
@@ -20,9 +22,11 @@ function VideoContainer() {
   };
 
   return (
-    <div className='w-full h-full flex flex-row flex-wrap border-2 overflow-y-scroll'>
+    <div className='max-w-[94vw] sm:w-[100vw] h-full flex  flex-wrap justify-around items-start border-[1px] overflow-y-scroll'>
       {videos.map(video => (
-        <VideoCard key={video.id} info={video} />
+        <Link to={"/watch?v="+video.id}>
+          <VideoCard key={video.id} info={video} />
+        </Link>
       ))}
     </div>
   );
