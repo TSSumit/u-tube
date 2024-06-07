@@ -2,6 +2,7 @@ import React from 'react'
 import ButtonList from './ButtonList'
 import VideoContainer from './VideoContainer'
 import DefoultSlideBar from './DefoultSlidebar'
+import MobileBottombar from './MobileBottombar'
 
 const MainContainer=()=> {
   return (
@@ -12,6 +13,7 @@ const MainContainer=()=> {
           <div className="flex-grow overflow-y-auto">
             <VideoContainer />
           </div>
+          <MobileBottombar/>
         </div>
 
         
