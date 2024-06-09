@@ -23,12 +23,7 @@ function VideoContainer() {
   return (
     <div className='max-w-[94vw] sm:w-[100vw] h-full flex  flex-wrap justify-around items-start border-[1px] overflow-y-scroll'>
       {videos.map(video => (
-        <Link key={video.id}
-          to={{
-            pathname: '/watch',
-            search: `?v=${video.id}`,
-            state: { videoData: video }
-          }}>
+        <Link key={video.id} to={`watch?v=${video.id}`}>
           <VideoCard key={video.id} info={video}/>
         </Link>
       ))}
