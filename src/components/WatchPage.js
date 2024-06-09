@@ -3,9 +3,8 @@ import { useDispatch } from 'react-redux';
 import { closeMenu } from '../utils/appSlice';
 import VideoPlayer from './VideoPlayer';
 import { useLocation } from 'react-router-dom';
-import { YOUTUBE_API_BASE_URL } from '../utils/constants';
+import { API_Key, YOUTUBE_API_BASE_URL } from '../utils/constants';
 
-const API_KEY = 'YOUR_API_KEY';
 
 const WatchPage = () => {
   const dispatch = useDispatch();
@@ -22,7 +21,7 @@ const WatchPage = () => {
     dispatch(closeMenu());
 
     const fetchVideoData = async () => {
-        const response = await fetch(`${YOUTUBE_API_BASE_URL}videos?part=snippet,statistics&id=${videoId}&key=${API_KEY}`);
+        const response = await fetch(`${YOUTUBE_API_BASE_URL}videos?part=snippet,statistics&id=${videoId}&key=${API_Key}`);
         const data = await response.json();
         const video = data.items[0];
         setVideoData(video);
@@ -30,27 +29,29 @@ const WatchPage = () => {
     };
 
     const fetchChannelData = async (channelId) => {
-      const response = await fetch(`${YOUTUBE_API_BASE_URL}channels?part=snippet&id=${channelId}&key=${API_KEY}`);
-      const data = await response.json();
+      const response = await fetch(`${YOUTUBE_API_BASE_URL}channels?part=snippet&id=${channelId}&key=${API_Key}`);
+      const data = await response.json(); 
       setChannelData(data.items[0]);
     };
 
     const fetchComments = async () => {
-      const response = await fetch(`${YOUTUBE_API_BASE_URL}commentThreads?part=snippet&videoId=${videoId}&key=${API_KEY}`);
+      const response = await fetch(`${YOUTUBE_API_BASE_URL}commentThreads?part=snippet&videoId=${videoId}&key=${API_Key}`);
       const data = await response.json();
       setComments(data.items);
     };
 
     const fetchRelatedVideos = async () => {
-      const response = await fetch(`${YOUTUBE_API_BASE_URL}search?part=snippet&relatedToVideoId=${videoId}&type=video&key=${API_KEY}`);
+      const response = await fetch(`${YOUTUBE_API_BASE_URL}search?part=snippet&relatedToVideo&Id=${videoId}&type=video&key=${API_Key}`);
       const data = await response.json();
+
       setRelatedVideos(data.items);
     };
-
+    
     fetchVideoData();
     fetchComments();
     fetchRelatedVideos();
   }, [dispatch, videoId]);
+  console.log(videoData+" and \n\n"+relatedVideos+" and \n\n"+comments+" and \n\n"+channelData+" and \n\n");
 
   return (
     <div className="container mx-auto p-4">
