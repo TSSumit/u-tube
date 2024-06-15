@@ -5,6 +5,7 @@ import VideoPlayer from './VideoPlayer';
 import { useLocation } from 'react-router-dom';
 import { API_Key, YOUTUBE_API_BASE_URL } from '../utils/constants';
 import VideoInfo from './VideoInfo';
+import Description from './Description';
 
 
 const WatchPage = () => {
@@ -74,6 +75,7 @@ const WatchPage = () => {
     <div className="container mx-auto p-4">
       <VideoPlayer />
       <VideoInfo data={[videoData,channelData]}/>
+      <Description data={videoData} />
       <div className="comments-section mt-4">
         <h2 className="text-xl font-bold mb-2">Comments</h2>
         {comments && comments.map(comment => (
