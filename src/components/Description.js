@@ -47,8 +47,8 @@ const Description = ({ data }) => {
   };
 
   return (
-    <div className="px-4 py-1 w-full h-fit text-md font-semibold">
-      <div className="space-y-2 border-black border-[2px] rounded-lg p-3">
+    <div className="px-4 py-1 w-full h-fit text-md font-semibold ">
+      <div className="space-y-2 border-black border-[2px] rounded-lg p-3 bg-slate-100">
         <p className='text-sm text-gray-600'>
           {viewCount} &middot; {dataTime}
         </p>

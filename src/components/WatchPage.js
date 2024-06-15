@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { API_Key, YOUTUBE_API_BASE_URL } from '../utils/constants';
 import VideoInfo from './VideoInfo';
 import Description from './Description';
+import CommentsContainer from './CommentsContainer';
 
 
 const WatchPage = () => {
@@ -76,15 +77,7 @@ const WatchPage = () => {
       <VideoPlayer />
       <VideoInfo data={[videoData,channelData]}/>
       <Description data={videoData} />
-      <div className="comments-section mt-4">
-        <h2 className="text-xl font-bold mb-2">Comments</h2>
-        {comments && comments.map(comment => (
-          <div key={comment.id} className="comment mb-2">
-            <p className="font-semibold">{comment.snippet.topLevelComment.snippet.authorDisplayName}</p>
-            <p>{comment.snippet.topLevelComment.snippet.textDisplay}</p>
-          </div>
-        ))}
-      </div>
+      <CommentsContainer commentsData={[comments,videoData?.statistics?.commentCount]}/>
       <div className="related-videos-section mt-4">
         <h2 className="text-xl font-bold mb-2">Related Videos</h2>
         {relatedVideos && relatedVideos.map(video => (
