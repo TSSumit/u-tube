@@ -12,14 +12,14 @@ const Head = () => {
   const dispatch = useDispatch();
 
   const handleShowList = useCallback(() => {
-    console.log("call to handleShowList");
+    //console.log("call to handleShowList");
     dispatch(toggleMenu());
   }, [dispatch]);
 
   const handleSearch = useCallback(() => {
     const query = searchRef.current.value;
     if (query) {
-      console.log(`Searching for: ${query}`);
+      // console.log(`Searching for: ${query}`);
       // Add search functionality here
     } else {
       console.error("Search query is empty");

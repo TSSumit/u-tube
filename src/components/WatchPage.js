@@ -17,7 +17,7 @@ const WatchPage = () => {
 
   const [videoData, setVideoData] = useState( null);
   const [channelData, setChannelData] = useState(null);
-  const [comments, setComments] = useState([]);
+  const [commentsData, setCommentsData] = useState(null);
   const [relatedVideos, setRelatedVideos] = useState([]);
 
   useEffect(() => {
@@ -46,11 +46,11 @@ const WatchPage = () => {
       }
     };
 
-    const fetchComments = async () => {
+    const fetchCommentsData = async () => {
       try{
-        const response = await fetch(`${YOUTUBE_API_BASE_URL}commentThreads?part=snippet&videoId=${videoId}&maxResults=20&key=${API_Key}`);
+        const response = await fetch(`${YOUTUBE_API_BASE_URL}commentThreads?part=snippet&videoId=${videoId}&maxResults=30&key=${API_Key}`);
         const data = await response.json();
-        setComments(data?.items);
+        setCommentsData(data);
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -67,26 +67,26 @@ const WatchPage = () => {
     };
     
     fetchVideoData();
-    fetchComments();
+    fetchCommentsData();
     fetchRelatedVideos();
   }, [dispatch, videoId]);
-  console.log(videoData+" and \n\n"+relatedVideos+" and \n\n"+comments+" and \n\n"+channelData+" and \n\n");
+  
+  // console.log(commentsdata);
+
+  const initialCommentsData = {
+    comments: commentsData?.items, // Array of comments
+    nextPageToken: commentsData?.nextPageToken, // Initial nextPageToken
+    noOfComments: videoData?.statistics?.commentCount, // Total number of comments
+    videoId: videoData?.id // Video ID
+  };
 
   return (
     <div className="container mx-auto p-4">
       <VideoPlayer />
       <VideoInfo data={[videoData,channelData]}/>
       <Description data={videoData} />
-      <CommentsContainer commentsData={[comments,videoData?.statistics?.commentCount]}/>
-      <div className="related-videos-section mt-4">
-        <h2 className="text-xl font-bold mb-2">Related Videos</h2>
-        {relatedVideos && relatedVideos.map(video => (
-          <div key={video.id.videoId} className="related-video mb-2">
-            <h3 className="font-semibold">{video.snippet.title}</h3>
-            <p>{video.snippet.description}</p>
-          </div>
-        ))}
-      </div>
+      <CommentsContainer initialCommentsData={initialCommentsData} />
+      
     </div>
   );
 };
