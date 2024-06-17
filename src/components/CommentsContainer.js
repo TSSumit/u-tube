@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react';
 import CommentBox from './CommentBox';
 import { API_Key, YOUTUBE_API_BASE_URL } from '../utils/constants';
 import CommentBoxShimmer from '../Shimmers/CommentBoxShimmer';
+import ErrorPage from './ErrorPage';
 
 // Sample API function to fetch comments
 const fetchComments = async (videoId, nextPageToken = '') => {
   try {
-    console.log(videoId + " --------- " + nextPageToken);
+    // console.log(videoId + " --------- " + nextPageToken);
     const response = await fetch(`${YOUTUBE_API_BASE_URL}commentThreads?part=snippet&videoId=${videoId}&pageToken=${nextPageToken}&maxResults=20&key=${API_Key}`);
     const data = await response.json();
+    if (data.error) {
+      throw data.error;
+    }
     return data;
   } catch (error) {
     console.error('Error fetching comments:', error);
@@ -22,6 +26,7 @@ const CommentsContainer = ({ initialCommentsData }) => {
   const [noOfComments, setNoOfComments] = useState(initialCommentsData?.noOfComments || 0);
   const [videoId, setVideoId] = useState(initialCommentsData?.videoId || '');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     // Update state if initialCommentsData changes
@@ -38,7 +43,9 @@ const CommentsContainer = ({ initialCommentsData }) => {
   const loadMoreComments = async () => {
     setLoading(true);
     const data = await fetchComments(videoId, nextPageToken);
-    if (data) {
+    if (data.error) {
+      setError(data.error);
+    } else if (data) {
       setComments((prevComments) => [...prevComments, ...data.items]);
       setNextPageToken(data?.nextPageToken);
     }
@@ -47,6 +54,9 @@ const CommentsContainer = ({ initialCommentsData }) => {
 
   if (!initialCommentsData) {
     return <div>Loading initial comments...</div>;
+  }
+  if (error) {
+    return <ErrorPage error={error} />;
   }
 
   return (

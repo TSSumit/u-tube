@@ -7,7 +7,8 @@ import { API_Key, YOUTUBE_API_BASE_URL } from '../utils/constants';
 import VideoInfo from './VideoInfo';
 import Description from './Description';
 import CommentsContainer from './CommentsContainer';
-
+import RelatedVideosContainer from './RelatedVideosContainer';
+import ErrorPage from './ErrorPage';
 
 const WatchPage = () => {
   const dispatch = useDispatch();
@@ -15,63 +16,66 @@ const WatchPage = () => {
   const queryParams = new URLSearchParams(location.search);
   const videoId = queryParams.get('v');
 
-  const [videoData, setVideoData] = useState( null);
+  const [videoData, setVideoData] = useState(null);
   const [channelData, setChannelData] = useState(null);
   const [commentsData, setCommentsData] = useState(null);
-  const [relatedVideos, setRelatedVideos] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     dispatch(closeMenu());
 
-      
     const fetchVideoData = async () => {
       try {
         const response = await fetch(`${YOUTUBE_API_BASE_URL}videos?part=snippet,statistics&id=${videoId}&key=${API_Key}`);
         const data = await response.json();
+        if (data.error) {
+          setError(data.error.message);
+          return;
+        }
         const video = data.items[0];
         setVideoData(video);
         fetchChannelData(video?.snippet?.channelId);
       } catch (error) {
         console.error("Error fetching video data:", error);
+        setError(error.message);
       }
     };
 
     const fetchChannelData = async (channelId) => {
-      try{
+      try {
         const response = await fetch(`${YOUTUBE_API_BASE_URL}channels?part=snippet,statistics&id=${channelId}&key=${API_Key}`);
-        const data = await response.json(); 
+        const data = await response.json();
+        if (data.error) {
+          setError(data.error.message);
+          return;
+        }
         setChannelData(data?.items[0]);
       } catch (error) {
         console.error("Error fetching channel data:", error);
+        setError(error.message);
       }
     };
 
     const fetchCommentsData = async () => {
-      try{
+      try {
         const response = await fetch(`${YOUTUBE_API_BASE_URL}commentThreads?part=snippet&videoId=${videoId}&maxResults=30&key=${API_Key}`);
         const data = await response.json();
+        if (data.error) {
+          setError(data.error.message);
+          return;
+        }
         setCommentsData(data);
       } catch (error) {
         console.error("Error fetching comments:", error);
+        setError(error.message);
       }
     };
 
-    const fetchRelatedVideos = async () => {
-      try{  
-        const response = await fetch(`${YOUTUBE_API_BASE_URL}search?part=snippet&relatedToVideo&Id=${videoId}&type=video&maxResults=20&key=${API_Key}`);
-        const data = await response.json();
-        setRelatedVideos(data?.items);
-      } catch (error) {
-        console.error("Error fetching video data:", error);
-      }
-    };
-    
     fetchVideoData();
     fetchCommentsData();
-    fetchRelatedVideos();
+    setLoading(false);
   }, [dispatch, videoId]);
-  
-  // console.log(commentsdata);
 
   const initialCommentsData = {
     comments: commentsData?.items, // Array of comments
@@ -80,13 +84,21 @@ const WatchPage = () => {
     videoId: videoData?.id // Video ID
   };
 
+  if (error) {
+    return <ErrorPage error={error} />;
+  }
+
+  if (loading || !videoData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="container mx-auto p-4">
       <VideoPlayer />
-      <VideoInfo data={[videoData,channelData]}/>
+      <VideoInfo data={[videoData, channelData]} />
       <Description data={videoData} />
+      {videoId && <RelatedVideosContainer videoId={videoId} />}
       <CommentsContainer initialCommentsData={initialCommentsData} />
-      
     </div>
   );
 };
