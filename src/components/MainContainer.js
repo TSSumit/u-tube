@@ -6,7 +6,7 @@ import MobileBottombar from './MobileBottombar'
 
 const MainContainer=()=> {
   return (
-    <div className="flex w-[100vw] h-[88vh] px-2">
+    <div className="flex w-[100vw] h-[88vh] px-5">
       <DefoultSlideBar/>
       <div className="flex flex-col flex-grow ">
         <ButtonList />

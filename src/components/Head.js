@@ -1,14 +1,13 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
-import { BsList, BsSearch } from "react-icons/bs";
+import { BsList } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-import { TiMicrophone } from "react-icons/ti";
 import { RiVideoAddLine } from "react-icons/ri";
 import { FaBell } from "react-icons/fa";
+import SearchBar from './SearchBar';
 
 const Head = () => {
-  const searchRef = useRef();
   const dispatch = useDispatch();
 
   const handleShowList = useCallback(() => {
@@ -16,15 +15,7 @@ const Head = () => {
     dispatch(toggleMenu());
   }, [dispatch]);
 
-  const handleSearch = useCallback(() => {
-    const query = searchRef.current.value;
-    if (query) {
-      // console.log(`Searching for: ${query}`);
-      // Add search functionality here
-    } else {
-      console.error("Search query is empty");
-    }
-  }, []);
+  
 
   return (
     <header className='px-4 py-1  w-full flex justify-between items-center h-15'>
@@ -41,26 +32,14 @@ const Head = () => {
           className='h-6 md:h-7 ml-2' 
         />
       </div>
-      <div className="flex items-center  min-w-[200px] w-[35vw] h-full">
-        <input 
-          type="text" 
-          ref={searchRef} 
-          className="h-9 md:h-10 px-3 w-full rounded-l-full border border-gray-700 border-r-0 " 
-          placeholder="Search" 
-        />
-        <button 
-          onClick={handleSearch} 
-          className="px-3 h-9 md:h-10 border border-gray-700 rounded-r-full"
-        >
-          <BsSearch className="h-full w-5" />
-        </button>
-        <TiMicrophone className="hidden sm:block h-9 md:h-10 w-10 md:w-12 m-1 md:m-2 bg-gray-300 p-2 rounded-full" />
+      <div className="flex items-center  min-w-[300px]  h-full">
+        <SearchBar/>
       </div>
       <div className='hidden sm:block'>
-        <div className="flex items-center  max-w-[150px] md:w-[10vw] min-w-[80px] h-full space-x-3 md:space-x-4 ">
-          <RiVideoAddLine className="h-6 md:h-8 w-6 md:w-8" />
-          <FaBell className="h-6 md:h-8 w-6 md:w-8" />
-          <CgProfile className="h-6 md:h-8 w-6 md:w-8" />
+        <div className="flex items-center  w-fit h-full space-x-3 md:space-x-4 ">
+          <RiVideoAddLine className="h-[30px] w-[30px]" />
+          <FaBell className="h-[30px] w-[30px]" />
+          <CgProfile className="h-[30px] w-[30px]" />
         </div>
       </div>
     </header>
