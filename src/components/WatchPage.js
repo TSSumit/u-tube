@@ -9,6 +9,7 @@ import Description from './Description';
 import CommentsContainer from './CommentsContainer';
 import RelatedVideosContainer from './RelatedVideosContainer';
 import ErrorPage from './ErrorPage';
+import ButtonList from './ButtonList';
 
 const WatchPage = () => {
   const dispatch = useDispatch();
@@ -20,26 +21,25 @@ const WatchPage = () => {
   const [channelData, setChannelData] = useState(null);
   const [commentsData, setCommentsData] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [isSmallWindow, setIsSmallWindow] = useState(true);
 
   useEffect(() => {
     dispatch(closeMenu());
-    
-    
+
     const fetchVideoData = async () => {
       try {
         const response = await fetch(`${YOUTUBE_API_BASE_URL}videos?part=snippet,statistics&id=${videoId}&key=${API_Key}`);
         const data = await response.json();
         if (data.error) {
           setError(data.error.message);
+          console.error("Error fetching video data:", data.error.message);
           return;
         }
         const video = data.items[0];
         setVideoData(video);
         fetchChannelData(video?.snippet?.channelId);
       } catch (error) {
-        console.error("Error fetching video data:", error);
+        console.error("Error fetching video data:", error.message);
         setError(error.message);
       }
     };
@@ -50,11 +50,12 @@ const WatchPage = () => {
         const data = await response.json();
         if (data.error) {
           setError(data.error.message);
+          console.error("Error fetching channel data:", data.error.message);
           return;
         }
         setChannelData(data?.items[0]);
       } catch (error) {
-        console.error("Error fetching channel data:", error);
+        console.error("Error fetching channel data:", error.message);
         setError(error.message);
       }
     };
@@ -65,27 +66,27 @@ const WatchPage = () => {
         const data = await response.json();
         if (data.error) {
           setError(data.error.message);
+          console.error("Error fetching comments:", data.error.message);
           return;
         }
         setCommentsData(data);
       } catch (error) {
-        console.error("Error fetching comments:", error);
+        console.error("Error fetching comments:", error.message);
         setError(error.message);
       }
     };
 
     fetchVideoData();
     fetchCommentsData();
-    setLoading(false);
 
     const handleResize = () => {
-      setIsSmallWindow(window.innerWidth <= 1024); // Adjust 768 based on your breakpoint
+      setIsSmallWindow(window.innerWidth <= 1024); // Adjust 1024 based on your breakpoint
     };
-    handleResize();// Initial check on component mount
-    window.addEventListener('resize', handleResize);// Event listener for window resize
+    handleResize(); // Initial check on component mount
+    window.addEventListener('resize', handleResize); // Event listener for window resize
     return () => {
       window.removeEventListener('resize', handleResize);
-    };// Cleanup the event listener on component unmount
+    }; // Cleanup the event listener on component unmount
 
   }, [dispatch, videoId]);
 
@@ -100,15 +101,12 @@ const WatchPage = () => {
     return <ErrorPage error={error} />;
   }
 
-  if (loading || !videoData) {
-    return <div>Loading...</div>;
-  }
-
+  
   return (
     <>
       {isSmallWindow ? (
         <div className="container mx-auto p-4">
-          <VideoPlayer />
+          <VideoPlayer videoId={videoId} />
           <VideoInfo data={[videoData, channelData]} />
           <Description data={videoData} />
           {videoId && <RelatedVideosContainer videoId={videoId} />}
@@ -118,12 +116,13 @@ const WatchPage = () => {
         <div className="container mx-auto p-2 w-full">
           <div className="flex">
             <div className="w-3/5 pr-4">
-              <VideoPlayer />
+              <VideoPlayer videoId={videoId} />
               <VideoInfo data={[videoData, channelData]} />
               <Description data={videoData} />
               <CommentsContainer initialCommentsData={initialCommentsData} />
             </div>
             <div className="w-2/5 min-w-[450px] ml-5">
+              <ButtonList />
               {videoId && <RelatedVideosContainer videoId={videoId} />}
             </div>
           </div>

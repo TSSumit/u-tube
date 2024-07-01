@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import VideoCard from './VideoCard';
-import { API_Key, YOUTUBE_API_BASE_URL} from '../utils/constants';
+import { API_Key, YOUTUBE_API_BASE_URL } from '../utils/constants';
 import { Link } from 'react-router-dom';
 import VideoCardShimmer from '../Shimmers/VideoCardShimmer';
 import ErrorPage from './ErrorPage';
@@ -20,11 +20,14 @@ function VideoContainer() {
       const data = await response.json();
       if (data.error) {
         setError(data.error);
+        setLoading(false);
+        return;
       }
       setVideos(data.items);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching videos:", error);
+      setError(error);
       setLoading(false);
     }
   };
@@ -41,8 +44,8 @@ function VideoContainer() {
         ))
       ) : (
         videos.map(video => (
-          <Link key={video.id} to={`watch?v=${video.id}`}>
-            <VideoCard key={video.id} info={video} />
+          <Link key={video.id} to={`/watch?v=${video.id}`}>
+            <VideoCard info={video} />
           </Link>
         ))
       )}

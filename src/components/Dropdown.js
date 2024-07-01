@@ -1,7 +1,7 @@
 import React from 'react';
 import { BsList } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleMenu } from '../utils/appSlice';
+import { closeMenu } from '../utils/appSlice';
 import { MdArrowForwardIos, MdFeedback, MdHomeFilled, MdOutlineFlag, MdOutlinePodcasts, MdOutlineWatchLater, MdSubscriptions } from 'react-icons/md';
 import { IoIosTrophy, IoMdHelpCircle } from 'react-icons/io';
 import { SiYoutubegaming, SiYoutubeshorts, SiYoutubestudio } from 'react-icons/si';
@@ -20,7 +20,7 @@ const Dropdown = () => {
   const dispatch = useDispatch();
 
   const handleHideList = () => {
-    dispatch(toggleMenu());
+    dispatch(closeMenu());
   };
 
   return (
@@ -156,9 +156,4 @@ const Dropdown = () => {
   );
 };
 
-
 export default Dropdown;
-
-
-
-

@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import CommentBox from './CommentBox';
-import { API_Key, YOUTUBE_API_BASE_URL } from '../utils/constants';
+import { API_Key, YOUTUBE_API_BASE_URL, nLevelComments } from '../utils/constants';
 import CommentBoxShimmer from '../Shimmers/CommentBoxShimmer';
 import ErrorPage from './ErrorPage';
 
-// Sample API function to fetch comments
 const fetchComments = async (videoId, nextPageToken = '') => {
   try {
-    // console.log(videoId + " --------- " + nextPageToken);
-    const response = await fetch(`${YOUTUBE_API_BASE_URL}commentThreads?part=snippet&videoId=${videoId}&pageToken=${nextPageToken}&maxResults=20&key=${API_Key}`);
+    const response = await fetch(`${YOUTUBE_API_BASE_URL}commentThreads?part=snippet,replies&videoId=${videoId}&pageToken=${nextPageToken}&maxResults=20&key=${API_Key}`);
     const data = await response.json();
     if (data.error) {
       throw data.error;
@@ -27,9 +25,9 @@ const CommentsContainer = ({ initialCommentsData }) => {
   const [videoId, setVideoId] = useState(initialCommentsData?.videoId || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showNLevelComments, setShowNLevelComments] = useState(false);
 
   useEffect(() => {
-    // Update state if initialCommentsData changes
     if (initialCommentsData) {
       setComments(initialCommentsData.comments || []);
       setNextPageToken(initialCommentsData.nextPageToken || '');
@@ -38,8 +36,6 @@ const CommentsContainer = ({ initialCommentsData }) => {
     }
   }, [initialCommentsData]);
 
-  console.log('videoId is ' + videoId + " and comments are " + comments);
-
   const loadMoreComments = async () => {
     setLoading(true);
     const data = await fetchComments(videoId, nextPageToken);
@@ -47,7 +43,7 @@ const CommentsContainer = ({ initialCommentsData }) => {
       setError(data.error);
     } else if (data) {
       setComments((prevComments) => [...prevComments, ...data.items]);
-      setNextPageToken(data?.nextPageToken);
+      setNextPageToken(data.nextPageToken);
     }
     setLoading(false);
   };
@@ -62,8 +58,20 @@ const CommentsContainer = ({ initialCommentsData }) => {
   return (
     <div className='p-4'>
       <div className='text-xl font-bold pb-3'>{`${noOfComments} Comments`}</div>
-        <div>
-        {comments ? (
+      <div>
+        {showNLevelComments ?
+          <>
+            <button className='w-full p-2 mb-2 bg-blue-200 border-black border-1 hover:bg-blue-400 active:bg-blue-600 rounded-lg' onClick={() => setShowNLevelComments(false)}>Hide N-Level Comments</button>
+            {nLevelComments.map(comment => (
+              <CommentBox key={comment.id} data={comment} />
+            ))}
+          </>
+          :
+          <button className='w-full p-2 mb-2 bg-blue-200 border-black border-1 hover:bg-blue-400 active:bg-blue-600 rounded-lg' onClick={() => setShowNLevelComments(true)}>Show N-Level Comments</button>
+        }
+      </div>
+      <div>
+        {comments.length > 0 ? (
           comments.map(comment => (
             <CommentBox key={comment.id} data={comment} />
           ))

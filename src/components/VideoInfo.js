@@ -30,7 +30,7 @@ const formatCount = (count) => {
                         {data[1]?.snippet?.title}
                       </li>
                       <li className='text-[0.85rem] text-gray-800 p-0 list-none leading-tight mb-0'>
-                        {formatCount(data[1]?.statistics?.subscriberCount)}M subscribers
+                        {formatCount(data[1]?.statistics?.subscriberCount)} subscribers
                       </li>
                     </div>
                 </Link>
