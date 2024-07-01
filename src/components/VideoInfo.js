@@ -21,7 +21,7 @@ const formatCount = (count) => {
     <div className="flex-row justify-center items-center p-4 w-full">
       <div className="mb-2">
         <h2 className="text-xl -mt-4 mb-2 font-bold">{data[0]?.snippet?.title}</h2>
-        <div className='h-[35px]  flex justify-between'>
+        <div className='h-[40px]  flex justify-between'>
             <div className='w-full flex justify-between '>
                 <Link key={channelId} to={"/"+channelId} className='flex h-[100%] rounded-full pr-3  hover:bg-gray-200 hover:border-gray-800 active:bg-gray-800 active:text-gray-50 transition duration-300'>
                     <img src={data[1]?.snippet?.thumbnails?.medium?.url} alt="Channel Logo" className='h-[40px] w-[40px] rounded-full mr-2' />

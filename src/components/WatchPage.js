@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { closeMenu } from '../utils/appSlice';
+import { addVideoToHistory } from '../utils/historySlice';
 import VideoPlayer from './VideoPlayer';
 import { useLocation } from 'react-router-dom';
 import { API_Key, YOUTUBE_API_BASE_URL } from '../utils/constants';
@@ -10,6 +11,8 @@ import CommentsContainer from './CommentsContainer';
 import RelatedVideosContainer from './RelatedVideosContainer';
 import ErrorPage from './ErrorPage';
 import ButtonList from './ButtonList';
+import HeadBar from './HeadBar';
+import LiveChat from './LiveChat';
 
 const WatchPage = () => {
   const dispatch = useDispatch();
@@ -37,6 +40,7 @@ const WatchPage = () => {
         }
         const video = data.items[0];
         setVideoData(video);
+        dispatch(addVideoToHistory(video)); // Dispatch the full video data
         fetchChannelData(video?.snippet?.channelId);
       } catch (error) {
         console.error("Error fetching video data:", error.message);
@@ -101,27 +105,32 @@ const WatchPage = () => {
     return <ErrorPage error={error} />;
   }
 
-  
   return (
     <>
       {isSmallWindow ? (
-        <div className="container mx-auto p-4">
-          <VideoPlayer videoId={videoId} />
-          <VideoInfo data={[videoData, channelData]} />
-          <Description data={videoData} />
-          {videoId && <RelatedVideosContainer videoId={videoId} />}
-          <CommentsContainer initialCommentsData={initialCommentsData} />
+        <div className='flex flex-col overflow-x-hidden max-h-screen max-w-screen'>
+          <HeadBar />
+          <div className="container mx-auto p-4">
+            <VideoPlayer videoId={videoId} />
+            <VideoInfo data={[videoData, channelData]} />
+            <Description data={videoData} />
+            <LiveChat/>
+            {videoId && <RelatedVideosContainer videoId={videoId} />}
+            <CommentsContainer initialCommentsData={initialCommentsData} />
+          </div>
         </div>
       ) : (
-        <div className="container mx-auto p-2 w-full">
-          <div className="flex">
-            <div className="w-3/5 pr-4">
+        <div className='flex flex-col overflow-x-hidden max-h-screen max-w-screen'>
+          <HeadBar />
+          <div className=" p-5 w-full flex justify-center">
+            <div className="w-3/6 min-w-[640px] pr-1">
               <VideoPlayer videoId={videoId} />
               <VideoInfo data={[videoData, channelData]} />
               <Description data={videoData} />
               <CommentsContainer initialCommentsData={initialCommentsData} />
             </div>
-            <div className="w-2/5 min-w-[450px] ml-5">
+            <div className="w-2/6 min-w-[450px] pl-1">
+              <LiveChat/>
               <ButtonList />
               {videoId && <RelatedVideosContainer videoId={videoId} />}
             </div>

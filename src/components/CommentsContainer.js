@@ -61,13 +61,13 @@ const CommentsContainer = ({ initialCommentsData }) => {
       <div>
         {showNLevelComments ?
           <>
-            <button className='w-full p-2 mb-2 bg-blue-200 border-black border-1 hover:bg-blue-400 active:bg-blue-600 rounded-lg' onClick={() => setShowNLevelComments(false)}>Hide N-Level Comments</button>
+            <button className='w-full p-2 mb-2 bg-blue-200 border-black border-1 hover:bg-blue-400 active:bg-blue-600 rounded-lg' onClick={() => setShowNLevelComments(false)}>Hide N-Level Comments (demo)</button>
             {nLevelComments.map(comment => (
               <CommentBox key={comment.id} data={comment} />
             ))}
           </>
           :
-          <button className='w-full p-2 mb-2 bg-blue-200 border-black border-1 hover:bg-blue-400 active:bg-blue-600 rounded-lg' onClick={() => setShowNLevelComments(true)}>Show N-Level Comments</button>
+          <button className='w-full p-2 mb-2 bg-blue-200 border-black border-1 hover:bg-blue-400 active:bg-blue-600 rounded-lg' onClick={() => setShowNLevelComments(true)}>Show N-Level Comments (demo)</button>
         }
       </div>
       <div>

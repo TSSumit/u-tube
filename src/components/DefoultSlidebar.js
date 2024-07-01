@@ -8,7 +8,7 @@ const DefoultSlideBar = () => {
   return (
     <div className=' sm:block  w-[80px] h-[100%]    flex-row items-center text-xs '>
       <span className='flex flex-col justify-center items-center h-15 w-full py-5 my-2 hover:bg-slate-300  hover:rounded-md' >
-        <Link to={"/"} className="flex flex-col justify-center items-center">  
+        <Link to={"/home"} className="flex flex-col justify-center items-center">  
             <MdHomeFilled className='h-7 w-7'/>
             <span>Home</span>
         </Link>

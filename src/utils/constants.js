@@ -1,6 +1,6 @@
-export const API_Key="AIzaSyCLz-ydYvD133eMm_e3tHraMX3YovoPeRI";
+export const API_Key="AIzaSyDcuc3Kz9jIQrFTnKu-5hYTLamQXsn3pHs";
 
-
+export const   OFFSET_LIVE_CHAT=20;
 
 export const YOUTUBE_API_BASE_URL="https://www.googleapis.com/youtube/v3/";
 

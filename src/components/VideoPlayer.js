@@ -23,6 +23,7 @@ const VideoPlayer = () => {
     width: '640',
     playerVars: {
       autoplay: 1,
+      mute: 1, 
     },
   };
 
@@ -47,7 +48,7 @@ const VideoPlayer = () => {
         <YouTube
           videoId={videoId}
           opts={opts}
-          className={`inline-block align-middle ${loading ? 'hidden' : ''}`}
+          className={`inline-block align-middle  ${loading ? 'hidden' : ''} rounded-md `}
           onReady={handleReady}
           onStateChange={handleStateChange}
           onError={handleError}

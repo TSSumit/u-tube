@@ -29,8 +29,8 @@ const Dropdown = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={handleHideList}></div>
       )}
       <div className={`fixed z-50 left-0 top-0 transition-transform duration-300 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} h-screen w-[14rem]  flex flex-col bg-white overflow-scroll overflow-x-hidden `}>
-        <div className="w-full mt-2 h-16 flex  items-center p-2 border-b border-black">
-          <span className="p-1 pl-2 hover:bg-gray-300 rounded-full cursor-pointer" onClick={handleHideList}>
+        <div className="w-full mt-1.5 ml-1 h-16 flex  items-center p-2 border-b border-black">
+          <span className="p-1 ml-1 hover:bg-gray-300 rounded-full cursor-pointer" onClick={handleHideList}>
             <BsList className="w-7 h-7" />
           </span>
           <img src="https://logos-download.com/wp-content/uploads/2016/02/YouTube_Logo_2017.png" alt="yt-logo" className="h-7 pl-2" />

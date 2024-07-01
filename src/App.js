@@ -7,6 +7,7 @@ import WatchPage from './components/WatchPage';
 import { Provider } from 'react-redux';
 import store from './utils/store';
 import SearchPage from './components/SearchPage';
+import ErrorPage from './components/ErrorPage';
 
 const appRouter = createBrowserRouter([
   {
@@ -30,8 +31,24 @@ const appRouter = createBrowserRouter([
         element: <MainContainer />
       },
       {
-        path: "search",
+        path: "results",
         element: <SearchPage />
+      },
+      {
+        path: "shorts",
+        element: <ErrorPage error={{ code: 404, title: 'Page Not Found', message: 'Sorry for the inconvenience. This page does not exist.' }} />
+      },
+      {
+        path: "subscriptions",
+        element: <ErrorPage error={{ code: 404, title: 'Page Not Found', message: 'Sorry for the inconvenience. This page does not exist.' }} />
+      },
+      {
+        path: "you",
+        element: <ErrorPage error={{ code: 404, title: 'Page Not Found', message: 'Sorry for the inconvenience. This page does not exist.' }} />
+      },
+      {
+        path: "history",
+        element: <ErrorPage error={{ code: 404, title: 'Page Not Found', message: 'Sorry for the inconvenience. This page does not exist.' }} />
       }
     ]
   }

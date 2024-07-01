@@ -5,7 +5,7 @@ import { RxCross1 } from 'react-icons/rx';
 import { YoutubeSearchSuggestion_URL } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { cacheResults } from '../utils/searchSlice';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -16,6 +16,7 @@ const SearchBar = () => {
   const dispatch = useDispatch();
   const searchRef = useRef(null);
   const suggestionsRef = useRef(null);
+  const navigate = useNavigate();
 
   const getSearchSuggestions = useCallback(async () => {
     try {
@@ -79,6 +80,7 @@ const SearchBar = () => {
   const handleSuggestionClick = (suggestion) => {
     setSearchQuery(suggestion);
     setShowSuggestions(false);
+    navigate(`/results?search_query=${encodeURIComponent(suggestion)}`);
   };
 
   const handleInputFocus = () => {
@@ -89,9 +91,13 @@ const SearchBar = () => {
     setIsInputFocused(false);
   };
 
+  const handleSearch = () => {
+    navigate(`/results?search_query=${encodeURIComponent(searchQuery)}`);
+  };
+
   return (
     <div className='flex items-center w-full sm:w-[300px] md:w-[440px] lg:min-w-[500px] xl:w-[650px] h-full relative' ref={searchRef}>
-      <div className="flex items-center h-9 md:h-10 px-2 w-full rounded-l-full border border-gray-700 border-r-0 bg-white">
+      <div className="flex items-center align-middle h-10 px-2 w-full rounded-l-full border border-gray-700 border-r-0 bg-white">
         {(isInputFocused || searchQuery) && (
           <BsSearch className="h-full w-5 mx-2 text-gray-800 cursor-pointer" />
         )}
@@ -115,15 +121,11 @@ const SearchBar = () => {
         )}
       </div>
 
-      {/* <Link to={`search/${encodeURIComponent(searchQuery)}`}> */}
-        <button 
-          className="px-3 h-9 md:h-10 border border-gray-700 hover:bg-slate-200 active:bg-slate-400 rounded-r-full"
-        >
-          <BsSearch className="h-full w-5" />
-        </button>
-      {/* </Link> */}
+      <button onClick={handleSearch} className="px-3 h-10  border border-gray-700 hover:bg-slate-200 active:bg-slate-400 rounded-r-full">
+        <BsSearch className="h-full w-5" />
+      </button>
           
-      <TiMicrophone className="hidden sm:block h-9 md:h-10 w-10 md:w-12 m-1 md:m-2 bg-gray-300 p-2 rounded-full" />
+      <TiMicrophone className="hidden sm:block h-9 w-10 md:w-12 m-1 md:m-2 bg-gray-300 p-2 rounded-full" />
       {showSuggestions && suggestions.length > 0 && (
         <ul ref={suggestionsRef} className="absolute top-full mt-2 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10">
           {suggestions.map((suggestion, index) => (

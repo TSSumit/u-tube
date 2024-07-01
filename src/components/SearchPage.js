@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import VideoCard from './VideoCard';
 import { API_Key, YOUTUBE_API_BASE_URL } from '../utils/constants';
-import { Link } from 'react-router-dom';
 import VideoCardShimmer from '../Shimmers/VideoCardShimmer';
 import ErrorPage from './ErrorPage';
+import HeadBar from './HeadBar';
+import ButtonList from './ButtonList';
+import DefoultSlideBar from './DefoultSlidebar';
+import MobileBottombar from './MobileBottombar';
 
 function SearchPage() {
-  const { keyword } = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const keyword = queryParams.get('search_query');
+
   const [videos, setVideos] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -36,7 +42,9 @@ function SearchPage() {
   };
 
   useEffect(() => {
-    getVideos();
+    if (keyword) {
+      getVideos();
+    }
   }, [keyword]);
 
   if (error) {
@@ -44,18 +52,28 @@ function SearchPage() {
   }
 
   return (
-    <div className='w-full h-full flex flex-wrap justify-around items-start border-[1px] overflow-y-scroll'>
-      {loading ? (
-        Array.from({ length: 30 }).map((_, index) => (
-          <VideoCardShimmer key={index} />
-        ))
-      ) : (
-        videos.map(video => (
-          <Link key={video.id} to={`watch?v=${video.id}`}>
-            <VideoCard key={video.id} info={video} />
-          </Link>
-        ))
-      )}
+    <div className='flex flex-col overflow-x-hidden max-h-screen max-w-screen'>
+      <HeadBar />
+      <div className="flex w-[100vw] h-[88vh] px-5">
+        <DefoultSlideBar/>
+        <div className="flex flex-col flex-grow ">
+          <ButtonList />
+          <div className='w-full flex flex-wrap justify-around items-start border-[1px] overflow-y-scroll'>
+            {loading ? (
+              Array.from({ length: 30 }).map((_, index) => (
+                <VideoCardShimmer key={index} />
+              ))
+            ) : (
+              videos.map(video => (
+                <Link key={video.id} to={`watch?v=${video.id}`}>
+                  <VideoCard key={video.id} info={video} />
+                </Link>
+              ))
+            )}
+          </div>
+          <MobileBottombar/>
+        </div>        
+      </div>
     </div>
   );
 }
