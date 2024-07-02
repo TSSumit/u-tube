@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import CommentBox from './CommentBox';
-import { API_Key, YOUTUBE_API_BASE_URL, nLevelComments } from '../utils/constants';
+import { YOUTUBE_API_BASE_URL, nLevelComments } from '../utils/constants';
 import CommentBoxShimmer from '../Shimmers/CommentBoxShimmer';
 import ErrorPage from './ErrorPage';
+import { fetchWithKeyCycling } from '../utils/apiUtils';
 
 const fetchComments = async (videoId, nextPageToken = '') => {
   try {
-    const response = await fetch(`${YOUTUBE_API_BASE_URL}commentThreads?part=snippet,replies&videoId=${videoId}&pageToken=${nextPageToken}&maxResults=20&key=${API_Key}`);
-    const data = await response.json();
+    const data = await fetchWithKeyCycling(`${YOUTUBE_API_BASE_URL}commentThreads?part=snippet,replies&videoId=${videoId}&pageToken=${nextPageToken}&maxResults=20`);
     if (data.error) {
       throw data.error;
     }

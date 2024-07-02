@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import VideoCard from './VideoCard';
-import { API_Key, YOUTUBE_API_BASE_URL } from '../utils/constants';
+import {  YOUTUBE_API_BASE_URL } from '../utils/constants';
 import { Link } from 'react-router-dom';
 import VideoCardShimmer from '../Shimmers/VideoCardShimmer';
 import ErrorPage from './ErrorPage';
+import { fetchWithKeyCycling } from '../utils/apiUtils';
 
 function VideoContainer() {
   const [videos, setVideos] = useState(null);
@@ -16,8 +17,7 @@ function VideoContainer() {
 
   const getVideos = async () => {
     try {
-      const response = await fetch(`${YOUTUBE_API_BASE_URL}videos?part=snippet,contentDetails,statistics&chart=mostPopular&regionCode=IN&maxResults=50&key=${API_Key}`);
-      const data = await response.json();
+      const data = await fetchWithKeyCycling(`${YOUTUBE_API_BASE_URL}videos?part=snippet,contentDetails,statistics&chart=mostPopular&regionCode=IN&maxResults=50`);
       if (data.error) {
         setError(data.error);
         setLoading(false);

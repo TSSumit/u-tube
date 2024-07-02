@@ -4,7 +4,7 @@ import { closeMenu } from '../utils/appSlice';
 import { addVideoToHistory } from '../utils/historySlice';
 import VideoPlayer from './VideoPlayer';
 import { useLocation } from 'react-router-dom';
-import { API_Key, YOUTUBE_API_BASE_URL } from '../utils/constants';
+import {  YOUTUBE_API_BASE_URL } from '../utils/constants';
 import VideoInfo from './VideoInfo';
 import Description from './Description';
 import CommentsContainer from './CommentsContainer';
@@ -13,6 +13,7 @@ import ErrorPage from './ErrorPage';
 import ButtonList from './ButtonList';
 import HeadBar from './HeadBar';
 import LiveChat from './LiveChat';
+import { fetchWithKeyCycling } from '../utils/apiUtils';
 
 const WatchPage = () => {
   const dispatch = useDispatch();
@@ -31,8 +32,7 @@ const WatchPage = () => {
 
     const fetchVideoData = async () => {
       try {
-        const response = await fetch(`${YOUTUBE_API_BASE_URL}videos?part=snippet,statistics&id=${videoId}&key=${API_Key}`);
-        const data = await response.json();
+        const data = await fetchWithKeyCycling(`${YOUTUBE_API_BASE_URL}videos?part=snippet,statistics&id=${videoId}`);
         if (data.error) {
           setError(data.error.message);
           console.error("Error fetching video data:", data.error.message);
@@ -50,8 +50,7 @@ const WatchPage = () => {
 
     const fetchChannelData = async (channelId) => {
       try {
-        const response = await fetch(`${YOUTUBE_API_BASE_URL}channels?part=snippet,statistics&id=${channelId}&key=${API_Key}`);
-        const data = await response.json();
+        const data = await fetchWithKeyCycling(`${YOUTUBE_API_BASE_URL}channels?part=snippet,statistics&id=${channelId}`);
         if (data.error) {
           setError(data.error.message);
           console.error("Error fetching channel data:", data.error.message);
@@ -66,8 +65,7 @@ const WatchPage = () => {
 
     const fetchCommentsData = async () => {
       try {
-        const response = await fetch(`${YOUTUBE_API_BASE_URL}commentThreads?part=snippet&videoId=${videoId}&maxResults=30&key=${API_Key}`);
-        const data = await response.json();
+        const data = await fetchWithKeyCycling(`${YOUTUBE_API_BASE_URL}commentThreads?part=snippet&videoId=${videoId}&maxResults=30`);
         if (data.error) {
           setError(data.error.message);
           console.error("Error fetching comments:", data.error.message);

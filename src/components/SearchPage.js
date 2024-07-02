@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import VideoCard from './VideoCard';
-import { API_Key, YOUTUBE_API_BASE_URL } from '../utils/constants';
+import {  YOUTUBE_API_BASE_URL } from '../utils/constants';
 import VideoCardShimmer from '../Shimmers/VideoCardShimmer';
 import ErrorPage from './ErrorPage';
 import HeadBar from './HeadBar';
 import ButtonList from './ButtonList';
 import DefoultSlideBar from './DefoultSlidebar';
 import MobileBottombar from './MobileBottombar';
+import { fetchWithKeyCycling } from '../utils/apiUtils';
 
 function SearchPage() {
   const location = useLocation();
@@ -22,16 +23,14 @@ function SearchPage() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${YOUTUBE_API_BASE_URL}search?part=snippet&type=video&maxResults=30&q=${encodeURIComponent(keyword)}&key=${API_Key}`);
-      const data = await response.json();
+      const data = await fetchWithKeyCycling(`${YOUTUBE_API_BASE_URL}search?part=snippet&type=video&maxResults=30&q=${encodeURIComponent(keyword)}`);
       if (data.error) {
         setError(data.error);
         setLoading(false);
         return;
       }
       const videoIds = data.items.map(item => item.id.videoId).join(',');
-      const videoDetailsResponse = await fetch(`${YOUTUBE_API_BASE_URL}videos?part=snippet,contentDetails,statistics&id=${videoIds}&key=${API_Key}`);
-      const videoDetailsData = await videoDetailsResponse.json();
+      const videoDetailsData = await fetchWithKeyCycling(`${YOUTUBE_API_BASE_URL}videos?part=snippet,contentDetails,statistics&id=${videoIds}`);
       setVideos(videoDetailsData.items);
       setLoading(false);
     } catch (error) {

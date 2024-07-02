@@ -1,4 +1,5 @@
-export const API_Key="AIzaSyDcuc3Kz9jIQrFTnKu-5hYTLamQXsn3pHs";
+export const API_Key=["AIzaSyBbXZzzMkNtoANtVzrH95KRdjsAH7f8rV4",'AIzaSyCLz-ydYvD133eMm_e3tHraMX3YovoPeRI',"AIzaSyDGjNJ4OS8BdaRseYEgS1oZ2AqBzfEPbKc"];
+
 
 export const   OFFSET_LIVE_CHAT=20;
 

@@ -54,11 +54,11 @@ const LiveChat = () => {
   return (
     <div className='ml-2 my-4 p-2'>
       <div className='w-full h-[600px] p-2 border border-black bg-slate-100 rounded-lg rounded-b-none'>
-        <div>LiveChat</div>
+        <div className='px-4 py-1 font-bold text-xl'>LiveChat</div>
         <div className='h-full'>
           <div
             ref={chatContainerRef}
-            className='h-[560px] flex flex-col-reverse overflow-y-auto'
+            className='h-[550px] flex flex-col-reverse overflow-y-auto'
             onScroll={handleScroll}
           >
             {chatMessages.map((c, index) => (

@@ -119,4 +119,31 @@ export function getRandomName() {
     return `${randomComment} ${randomIcon}`;
   }
   
+
+  // utils/helper.js
+export const parseISO8601Duration = (duration) => {
+  if (!duration) return '';
+  
+  const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+  if (!match) return '';
+
+  const [, hours, minutes, seconds] = match;
+  const h = hours ? parseInt(hours, 10) : 0;
+  const m = minutes ? parseInt(minutes, 10) : 0;
+  const s = seconds ? parseInt(seconds, 10) : 0;
+
+  let formatted = '';
+  if (h > 0) {
+    formatted += `${h}:`;
+  }
+  if (m > 0 || h > 0) {
+    formatted += `${m < 10 && h > 0 ? '0' : ''}${m}:`;
+  }
+  if (s > 0 || (h === 0 && m === 0)) {
+    formatted += `${s < 10 && (h > 0 || m > 0) ? '0' : ''}${s}`;
+  }
+
+  return formatted;
+};
+
   
