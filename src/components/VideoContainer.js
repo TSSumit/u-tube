@@ -28,6 +28,7 @@ function VideoContainer() {
       }
       setVideos(prevVideos => [...prevVideos, ...data.items]);
       setNextPageToken(data.nextPageToken || null);
+      console.log('NextPageToken:', data.nextPageToken); // Logging nextPageToken
     } catch (error) {
       console.error("Error fetching videos:", error);
       setError("An error occurred while fetching videos.");
@@ -89,14 +90,16 @@ function VideoContainer() {
           </Link>
         ))
       )}
-      {/* Shimmer effect for loading more videos */}
+
+      {/* Show shimmer effects only if loading more and in the same container */}
       {loadingMore && (
-        <div className='w-full flex justify-center'>
+        <div className='w-full flex flex-wrap justify-center'>
           {Array.from({ length: 7 }).map((_, index) => (
             <VideoCardShimmer key={index} />
           ))}
         </div>
       )}
+
       <div ref={observerRef}></div>
     </div>
   );
