@@ -1,5 +1,5 @@
 // utils/apiUtils.js
-import { API_Key } from './constants';
+import { API_Key } from './constants.js';
 
 let currentKeyIndex = 0;
 

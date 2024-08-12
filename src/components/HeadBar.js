@@ -1,12 +1,13 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { showMenu, closeMenu } from "../utils/appSlice";
+import { Link } from 'react-router-dom';
 import { BsList } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { RiVideoAddLine } from "react-icons/ri";
 import { FaBell } from "react-icons/fa";
-import SearchBar from './SearchBar';
-import Dropdown from './Dropdown';
+import SearchBar from './SearchBar.js';
+import Dropdown from './Dropdown.js';
+import { closeMenu, showMenu } from '../utils/appSlice.js';
 
 const HeadBar = () => {
   const dispatch = useDispatch();
@@ -29,11 +30,13 @@ const HeadBar = () => {
         >
           <BsList className="w-6 h-6 md:w-7 md:h-7" />
         </button>
-        <img
-          src='https://logos-download.com/wp-content/uploads/2016/02/YouTube_Logo_2017.png'
-          alt='YouTube Logo'
-          className='h-6 md:h-7 ml-2'
-        />
+        <Link to={"/"}>
+          <img
+            src='https://logos-download.com/wp-content/uploads/2016/02/YouTube_Logo_2017.png'
+            alt='YouTube Logo'
+            className='h-6 md:h-7 ml-2'
+          />
+        </Link>
       </div>
       <div className="flex items-center min-w-[300px] h-full">
         <SearchBar />

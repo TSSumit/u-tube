@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import YouTube from 'react-youtube';
-import VideoPlayerShimmer from '../Shimmers/VideoPlayerShimmer'; // Adjust the import path as necessary
+import VideoPlayerShimmer from '../Shimmers/VideoPlayerShimmer.js'; // Adjust the import path as necessary
 
 const VideoPlayer = () => {
   const [loading, setLoading] = useState(true);

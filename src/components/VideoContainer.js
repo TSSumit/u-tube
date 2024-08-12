@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import VideoCard from './VideoCard';
-import {  YOUTUBE_API_BASE_URL } from '../utils/constants';
 import { Link } from 'react-router-dom';
-import VideoCardShimmer from '../Shimmers/VideoCardShimmer';
-import ErrorPage from './ErrorPage';
-import { fetchWithKeyCycling } from '../utils/apiUtils';
+import VideoCard from './VideoCard.js';
+import { YOUTUBE_API_BASE_URL } from '../utils/constants.js';
+import VideoCardShimmer from '../Shimmers/VideoCardShimmer.js';
+import ErrorPage from './ErrorPage.js';
+import { fetchWithKeyCycling } from '../utils/apiUtils.js';
 
 function VideoContainer() {
   const [videos, setVideos] = useState(null);

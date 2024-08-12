@@ -1,10 +1,10 @@
 // RelatedVideosContainer.js
 import React, { useState, useEffect } from 'react';
-import { YOUTUBE_API_BASE_URL } from '../utils/constants';
-import { fetchWithKeyCycling } from '../utils/apiUtils';
-import RelatedVideoCard from './RelatedVideoCard';
-import RelatedVideoCardShimmer from '../Shimmers/RelatedVideoCardShimmer';
-import ErrorPage from './ErrorPage';
+import { YOUTUBE_API_BASE_URL } from '../utils/constants.js';
+import { fetchWithKeyCycling } from '../utils/apiUtils.js';
+import RelatedVideoCard from './RelatedVideoCard.js';
+import RelatedVideoCardShimmer from '../Shimmers/RelatedVideoCardShimmer.js';
+import ErrorPage from './ErrorPage.js';
 
 const RelatedVideosContainer = ({ videoId }) => {
   const [relatedVideos, setRelatedVideos] = useState([]);

@@ -1,7 +1,6 @@
 import React from 'react';
 import { BsList } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeMenu } from '../utils/appSlice';
 import {   MdHomeFilled, MdOutlinePodcasts } from 'react-icons/md';
 import { IoIosTrophy } from 'react-icons/io';
 import { SiYoutubegaming } from 'react-icons/si';
@@ -13,6 +12,7 @@ import { HiMiniShoppingBag } from 'react-icons/hi2';
 import { FaFire } from 'react-icons/fa';
 import { GoHistory } from 'react-icons/go';
 import { Link } from 'react-router-dom';
+import { closeMenu } from '../utils/appSlice.js';
 
 const Dropdown = () => {
   const isOpen = useSelector((store) => store.app.isMenuOpen);

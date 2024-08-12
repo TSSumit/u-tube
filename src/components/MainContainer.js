@@ -1,9 +1,9 @@
 import React from 'react'
-import ButtonList from './ButtonList'
-import VideoContainer from './VideoContainer'
-import DefoultSlideBar from './DefoultSlidebar'
-import MobileBottombar from './MobileBottombar'
-import HeadBar from "./HeadBar";
+import ButtonList from './ButtonList.js'
+import VideoContainer from './VideoContainer.js'
+import DefoultSlideBar from './DefoultSlidebar.js'
+import MobileBottombar from './MobileBottombar.js'
+import HeadBar from "./HeadBar.js";
 
 const MainContainer=()=> {
   return (

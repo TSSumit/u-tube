@@ -1,6 +1,6 @@
 import React from 'react';
-import getRelativeTime from '../utils/getRelativeTime';
-import { parseISO8601Duration } from '../utils/helper';
+import getRelativeTime from '../utils/getRelativeTime.js';
+import { parseISO8601Duration } from '../utils/helper.js';
 
 // Utility function to format view count
 const formatViewCount = (views) => {
@@ -35,7 +35,7 @@ const VideoCard = ({ info }) => {
         src={thumbnails.medium.url}
         className='w-full h-auto rounded-t-xl'
       />
-      <span className='absolute top-[170px] right-2 z-50 px-1 py-[2px] bg-black text-white text-xs font-mono rounded-md'>{parseISO8601Duration(duration)}</span>
+      <span className='absolute top-[170px] right-2 z-10 px-1 py-[2px] bg-black text-white text-xs font-mono rounded-md'>{parseISO8601Duration(duration)}</span>
       <div className='p-3'>
         <p className='text-md font-bold -mt-1'>{truncateTitle(title, 69)}</p>
         <div className='flex items-center'>

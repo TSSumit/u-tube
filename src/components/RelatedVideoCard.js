@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import getRelativeTime from '../utils/getRelativeTime';
+import getRelativeTime from '../utils/getRelativeTime.js';
 
 const RelatedVideoCard = ({ video }) => {
   const { snippet } = video;
@@ -20,7 +20,7 @@ const RelatedVideoCard = ({ video }) => {
       <img
         alt='video thumbnail'
         src={thumbnails.medium.url}
-        className='w-60 h-33 object-cover rounded-lg'
+        className='w-60  object-cover rounded-lg'
       />
       <div className='ml-4'>
         <p className='text-md font-bold -mt-1'>{truncateTitle(title, 30)}</p>
