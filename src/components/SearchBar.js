@@ -5,6 +5,7 @@ import { RxCross1 } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
 import { cacheResults } from '../utils/searchSlice.js';
 import { useNavigate } from 'react-router-dom';
+import { YoutubeSearchSuggestion_URL } from '../utils/constants.js';
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -17,21 +18,25 @@ const SearchBar = () => {
   const navigate = useNavigate();
 
   const getSearchSuggestions = useCallback(async () => {
-      try {
-          const response = await fetch(`/search-suggestions?q=${encodeURIComponent(searchQuery)}`);
-          if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          const json = await response.json();
-          setSuggestions(json[1]);
-    
-          dispatch(cacheResults({
-              [searchQuery]: json[1]
-          }));
-      } catch (error) {
-          console.error('Error fetching search suggestions:', error.message);
-      }
-  }, [searchQuery, dispatch]);
+    try {
+        const response = await fetch(`${YoutubeSearchSuggestion_URL}${encodeURIComponent(searchQuery)}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const json = await response.json();
+        setSuggestions(json[1]);
+
+        dispatch(cacheResults({
+            [searchQuery]: json[1]
+        }));
+    } catch (error) {
+        console.error('Error fetching search suggestions:', error.message);
+    }
+}, [searchQuery, dispatch]);
+
+
 
 
   useEffect(() => {

@@ -2,3 +2,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.scrollbar-zero {
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
+  
+  .scrollbar-zero::-webkit-scrollbar {
+    height: 0px; /* For Chrome, Safari, and Edge */
+  }
+  
